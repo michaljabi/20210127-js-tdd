@@ -2,8 +2,19 @@ import { setupGameRules, makeAMove, randomChoice, gameInfo } from './game.js';
 
 describe('The Rock-Paper-Scissors Game', () => {
 
+    const gameRules = {
+        'scissors': 'paper',
+        'paper': 'rock',
+        'rock': 'scissors',
+    };
+    // Object.keys({
+    //     'scissors': 'paper',
+    //     'paper': 'rock',
+    //     'rock': 'scissors',
+    // }) //?
+
     beforeEach(() => {
-        setupGameRules(['rock', 'paper', 'scissors'])
+        setupGameRules(gameRules)
      })
 
     it('should accept all games rules at start (setupGameRules)', () => {
@@ -81,7 +92,7 @@ describe('The Rock-Paper-Scissors Game', () => {
 
     describe('game flow - integration test', () => {
         it('should give us output with game state and CPU choice [RQ-7]', () => {
-            setupGameRules(['rock', 'paper', 'scissors'])
+            setupGameRules(gameRules)
             const player1stChoice = 'scissors';
             const cpuPlayerChoice = randomChoice();
 
