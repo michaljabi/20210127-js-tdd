@@ -1,28 +1,97 @@
+import { setupGameRules, makeAMove, randomChoice, gameInfo } from './game.js';
 
 describe('The Rock-Paper-Scissors Game', () => {
 
-    it.todo('should accept all games rules at start (setupGameRules)')
+    beforeEach(() => {
+        setupGameRules(['rock', 'paper', 'scissors'])
+     })
 
-    it.todo('should decide about result based on 2-player moves [GAME - DRAW]')
+    it('should accept all games rules at start (setupGameRules)', () => {
+        expect(setupGameRules).toBeTruthy();
+    })
 
-    it.todo('should check if 1st choices is valid')
+    it('should decide about result based on 2-player moves [GAME - DRAW]', () => {
 
-    it.todo('should check if 2nd choice is valid')
+        const player1st = 'rock';
+        const player2nd = player1st;
 
-    it.todo.each([
+        const result = makeAMove(player1st, player2nd);
+
+        expect(result).toBe('DRAW');
+    })
+
+    it('should check if 1st choices is valid', () => {
+
+        const invalidChoice = 'hdgsjhagdjh';
+        const cpuChoice = 'rock';
+
+        expect(
+            () => makeAMove(invalidChoice, cpuChoice)
+        ).toThrow('Invalid Choice: hdgsjhagdjh')
+    })
+
+    it('should check if 2nd choice is valid', () => {
+
+        const player1st = 'rock';
+        const invalidChoice = 'invalid....';
+
+        expect(
+            () => makeAMove(player1st, invalidChoice)
+        ).toThrow('Invalid Choice: invalid....')
+    })
+
+
+
+    it.each([
         ['scissors', 'paper'],
         ['paper', 'rock'],
         ['rock', 'scissors'],
-    ])('should have [GAME - WIN] when user choice "scissors" and CPU "paper"')
+    ])('should have [GAME - WIN] when user choice "scissors" and CPU "paper"', (player1st, player2nd) => {
 
-    it.todo('should have [GAME - LOOSE] when user choice "paper" and CPU "scissors" ')
+        const result = makeAMove(player1st, player2nd);
 
-    it.todo('should have randomChoice() by CPU in range of "rock", "paper", "scissors"')
+        expect(result).toBe('WIN');
+    })
 
-    it.todo('should have result in format: You {game-state} - computer pick: {cpuPlayerPick} ')
+    it('should have [GAME - LOOSE] when user choice "paper" and CPU "scissors" ', () => {
+
+        const player1st = 'scissors';
+        const player2nd = 'rock';
+
+        const result = makeAMove(player1st, player2nd);
+
+        expect(result).toBe('LOOSE');
+    })
+
+    it('should have randomChoice() by CPU in range of "rock", "paper", "scissors"', () => {
+        const cpuPlayerPick = randomChoice();
+
+        expect( ['rock', 'paper', 'scissors']).toContain(cpuPlayerPick);
+    })
+
+    it('should have result in format: You {game-state} - computer pick: {cpuPlayerPick} ', () => {
+        const player1stPick = 'scissors';
+        const cpuPlayerPick = 'paper';
+        const result = makeAMove(player1stPick, cpuPlayerPick);
+
+        const message = gameInfo(result, cpuPlayerPick);
+
+        expect(message).toBe('You WIN - computer pick: paper')
+    })
 
     describe('game flow - integration test', () => {
-        it.todo('should give us output with game state and CPU choice [RQ-7]')
+        it('should give us output with game state and CPU choice [RQ-7]', () => {
+            setupGameRules(['rock', 'paper', 'scissors'])
+            const player1stChoice = 'scissors';
+            const cpuPlayerChoice = randomChoice();
+
+            const result = makeAMove(player1stChoice, cpuPlayerChoice);
+            const message = gameInfo(result, cpuPlayerChoice);
+
+            expect(['WIN', 'DRAW', 'LOOSE']).toContain(result);
+            expect(cpuPlayerChoice).toBeDefined()
+            expect(message).toBeDefined()
+        })
     })
 
     /**
