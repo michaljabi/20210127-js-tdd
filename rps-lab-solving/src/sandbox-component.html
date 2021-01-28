@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main></main>
+    <script type="module">
+        import { setupGameRules, makeAMove, gameInfo, randomChoice } from './game.js';
+        import { TheGameComponent } from './TheGameComponent.js'
+        
+        const choices = setupGameRules({
+            'scissors': 'paper',
+            'paper': 'rock',
+            'rock': 'scissors',
+        })
+        
+        const main = document.querySelector('main');
+        const component = new TheGameComponent({choices, onButtonClick: (choice) => {
+            const cpuPlayerChoice = randomChoice();
+
+            const result = makeAMove(choice, cpuPlayerChoice);
+            return gameInfo(result, cpuPlayerChoice);            
+        } })
+    
+        main.appendChild(component);
+    </script>
+</body>
+</html>
