@@ -4,12 +4,13 @@ let gameRules = {}
 function setupGameRules(rules) {
     choices = Object.keys(rules);
     gameRules = rules;
+    return choices;
 }
 
 function invalidChoiceError(choice) {
     if(!choices.includes(choice)) {
         throw new Error('Invalid Choice: ' + choice)
-    } 
+    }
 }
 
 function makeAMove(choice1, choice2) {
@@ -18,13 +19,13 @@ function makeAMove(choice1, choice2) {
     if(choice1 === choice2){
         return 'DRAW'
     }
-    const isWin = gameRules[choice1] === choice2;
+    const isWin = gameRules[choice1].includes(choice2);
     return isWin ? 'WIN' : 'LOOSE';
 }
 
 function randomChoice() {
     const index = Math.floor(Math.random() * choices.length);
-    return choices[index];    
+    return choices[index];
 }
 
 function gameInfo(gameState, playerPick) {
