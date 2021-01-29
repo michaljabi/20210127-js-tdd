@@ -1,17 +1,9 @@
 import { setupGameRules, makeAMove, randomChoice, gameInfo } from './game.js';
+import gameRulesProvider from './game-rules.provider.js'
 
 describe('The Rock-Paper-Scissors Game', () => {
 
-    const gameRules = {
-        'scissors': 'paper',
-        'paper': 'rock',
-        'rock': 'scissors',
-    };
-    // Object.keys({
-    //     'scissors': 'paper',
-    //     'paper': 'rock',
-    //     'rock': 'scissors',
-    // }) //?
+    const gameRules = gameRulesProvider.rockPaperScissorsGameRules();
 
     beforeEach(() => {
         setupGameRules(gameRules)
